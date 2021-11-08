@@ -11,6 +11,7 @@
 
   .wrapper {
     position: relative;
+    padding-left: 10px;
 
     .sliderArrow {
       width: 50px;
@@ -33,11 +34,12 @@
       }
     }
     .container {
-      margin-left: 4%;
+      margin-left: 50px;
       display: flex;
       width: max-content;
       margin-top: 10px;
       transform: translateX(0px);
+      transition: all 0.8s ease;
     }
   }
 }
