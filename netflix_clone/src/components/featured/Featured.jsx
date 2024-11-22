@@ -1,13 +1,32 @@
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./featured.scss";
 
 function Featured({ type }) {
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTYxMjU5MTA3MDExZDE5YmM5MDk1YyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNzkzODI0MSwiZXhwIjoxNjM4MzcwMjQxfQ.-3hKIaSAv8eaBrDeQkTSwd0X9Pj28aDBptGCHQ3H_ec",
+          },
+        });
+        setContent(res.data[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getRandomContent();
+  }, [type]);
   return (
     <div className="featured">
       {type && (
         <div className="category">
-          <span>{type === "movie" ? "Movies" : "Series"}</span>
+          <span>{type === "movies" ? "Movies" : "Series"}</span>
           <select name="genre" id="genre">
             <option>Genre</option>
             <option value="adventure">Adventure</option>
@@ -26,21 +45,10 @@ function Featured({ type }) {
           </select>
         </div>
       )}
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg"
-        alt=""
-      />
+      <img src={content.mainPageImg} alt="" />
       <div className="info">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/d/db/The-matrix-logo.svg"
-          alt=""
-        />
-        <span className="description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum
-          repellendus error beatae quos vero reprehenderit ducimus aliquid nisi
-          voluptatum totam fuga excepturi impedit veritatis illum, voluptates
-          officiis repellat amet iste?
-        </span>
+        <img src={content.titleIcon} alt="" />
+        <span className="description">{content.description}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./register.scss";
 
 function Register() {
@@ -25,7 +26,9 @@ function Register() {
             alt="Netflix Logo"
             className="logo"
           />
-          <button className="loginButton">Sign In</button>
+          <Link to="/login" className="link">
+            <button className="loginButton">Sign In</button>
+          </Link>
         </div>
       </div>
       <div className="container">

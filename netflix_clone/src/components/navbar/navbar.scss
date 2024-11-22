@@ -1,6 +1,6 @@
 .navbar {
   color: #fff;
-  font-size: 14px;
+  font-size: 20px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -24,12 +24,12 @@
       display: flex;
       align-items: center;
       img {
-        height: 25px;
-        margin-right: 40px;
+        height: 40px;
+        margin-right: 50px;
       }
 
       span {
-        margin-right: 20px;
+        margin-right: 60px;
         cursor: pointer;
       }
     }
@@ -38,19 +38,24 @@
       display: flex;
       align-items: center;
       img {
-        height: 30px;
-        width: 30px;
+        height: 40px;
+        width: 40px;
         border-radius: 5px;
         object-fit: cover;
         cursor: pointer;
       }
 
       .icon {
-        margin: 0 15px;
+        margin: 0 25px;
         cursor: pointer;
       }
 
       .profile {
+        .arrowIcon:hover {
+          transform: rotate(180deg);
+          transition: 200ms linear;
+        }
+
         .options {
           display: none;
           background-color: var(--main-color);

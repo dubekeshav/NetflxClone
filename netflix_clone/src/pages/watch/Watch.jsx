@@ -1,20 +1,20 @@
 import { ArrowBackOutlined } from "@material-ui/icons";
 import React from "react";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import "./watch.scss";
 
 function Watch() {
+  const location = useLocation();
+  const movie = location.state.movie;
   return (
     <div className="watch">
       <div className="back">
-        <ArrowBackOutlined /> Home
+        <Link to="/" className="link">
+          <ArrowBackOutlined />
+        </Link>
       </div>
-      <video
-        className="video"
-        autoPlay
-        progress
-        controls
-        src="https://cdn.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200223_Cafe_03_39_preview.mp4"
-      />
+      <video className="video" autoPlay progress controls src={movie.movie} />
     </div>
   );
 }

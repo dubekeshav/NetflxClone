@@ -4,13 +4,31 @@ import {
   ThumbDownAltOutlined,
   ThumbUpAltOutlined,
 } from "@material-ui/icons";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./listItem.scss";
 
-function ListItem({ index }) {
+function ListItem({ index, itemId }) {
   const [isHovered, setIsHovered] = useState(false);
-  const trailer =
-    "https://cdn.videvo.net/videvo_files/video/free/2017-12/large_watermarked/171124_B1_HD_001_preview.mp4";
+  const [item, setItem] = useState({});
+
+  useEffect(() => {
+    const getItem = async () => {
+      try {
+        const res = await axios.get("/movies/movie/" + itemId, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTYxMjU5MTA3MDExZDE5YmM5MDk1YyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNzkzODI0MSwiZXhwIjoxNjM4MzcwMjQxfQ.-3hKIaSAv8eaBrDeQkTSwd0X9Pj28aDBptGCHQ3H_ec",
+          },
+        });
+        setItem(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItem();
+  }, [itemId]);
 
   return (
     <div
@@ -19,31 +37,30 @@ function ListItem({ index }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        src="https://www.designmantic.com/blog/wp-content/uploads/2016/05/Game-of-Thrones-Logo-718x300.jpg"
-        alt=""
-      />
+      <img src={item.listImg} alt="" />
+
       {isHovered && (
         <>
-          <video src={trailer} autoPlay={true} loop />
+          <Link to="/watch" state={{ movie: item }} className="link">
+            <video src={item.trailer} autoPlay={true} loop />
+          </Link>
           <div className="itemInfo">
             <div className="icons">
-              <PlayArrow className="icon" />
+              <Link to="/watch" state={{ movie: item }} className="link">
+                <PlayArrow className="icon" />
+              </Link>
+
               <Add className="icon" />
               <ThumbUpAltOutlined className="icon" />
               <ThumbDownAltOutlined className="icon" />
             </div>
             <div className="itemInfoTop">
-              <span>1 hour 14 mins</span>
-              <span className="limit">+16</span>
-              <span>1999</span>
+              <span>{item.duration}</span>
+              <span className="limit">{item.ageLimit}+</span>
+              <span>{item.year}</span>
             </div>
-            <div className="itemDescription">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Molestias tenetur, amet placeat eligendi est harum adipisci sit
-              quis autem.
-            </div>
-            <div className="genre">Action</div>
+            <div className="itemDescription">{item.description}</div>
+            <div className="genre">{item.genre}</div>
           </div>
         </>
       )}

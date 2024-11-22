@@ -4,9 +4,9 @@
 
   .listTitle {
     color: #fff;
-    font-size: 20px;
+    font-size: 25px !important;
     font-weight: 500;
-    margin: 0 4% 0.5em 4%;
+    margin: 0 4% 0.5em 3%;
   }
 
   .wrapper {
@@ -40,6 +40,7 @@
       margin-top: 10px;
       transform: translateX(0px);
       transition: all 0.8s ease;
+      min-height: 150px;
     }
   }
 }
